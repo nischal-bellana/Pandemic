@@ -1,0 +1,20 @@
+pandemic
+  .idea
+  .mvn
+  src
+    main
+      java
+        com.webapp.pandemic
+            ChatWebSocketHandler
+            GameWebSocketHandler
+            PandemicApplication
+            WebSocketConfig
+      resources
+    test
+  target
+  .gitattributes
+  .gitignore
+  HELP.md
+  mvnw
+  mvnw.cmd
+  pom.xml

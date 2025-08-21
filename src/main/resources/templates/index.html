@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Pandemic</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.js" integrity="sha384-ksKjJrwjL5VxqAkAZAVOPXvMkwAykMaNYegdixAESVr+KqLkKE8XBDoZuwyWVUDv" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="title-icon">
+        <img th:src="@{/titleicon.svg}" alt="Pandemic">
+    </div>
+
+    <div class="login">
+        <input name="username" type="text" hx-post="/login" hx-trigger="keydown[keyCode==13]" hx-target="closest .login" hx-swap="outerHTML">
+        <button hx-post="/login" hx-include="previous [name='username']" hx-target="closest .login" hx-swap="outerHTML">Go</button>
+    </div>
+</body>
+</html>

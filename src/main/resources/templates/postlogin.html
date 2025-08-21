@@ -1,0 +1,18 @@
+<input type="hidden" class="username" name="username" th:value="${username}">
+<script>
+    window.addEventListener("pagehide", function () {
+      let data = new FormData();
+      data.append("username", document.querySelector(".username").value);
+      navigator.sendBeacon("/user-left", data);
+    });
+</script>
+
+<div class="chat-block">
+    <div class="chat-messages" hx-trigger="every 300ms" hx-get="/messages" hx-swap="beforeend" hx-include=".username">
+
+    </div>
+    <div class="chat-input">
+        <input name="message" type="text" placeholder="Type a message..." hx-post="/message" hx-trigger="keydown[keyCode==13]" hx-include=".username" hx-swap="outerHTML">
+        <button hx-post="/message" hx-include="previous input,.username" hx-target="previous input" hx-swap="outerHTML">Send</button>
+    </div>
+</div>

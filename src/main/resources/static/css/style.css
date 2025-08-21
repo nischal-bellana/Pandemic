@@ -1,0 +1,76 @@
+body{
+background-color: black;
+color: white;
+}
+
+.title-icon img{
+display: block;
+border: 2px rgb(191, 239, 226) solid;
+border-radius: 2px;
+margin: auto;
+width: 100px;
+}
+
+.title-icon img:hover{
+background-color: rgb(47, 47, 47);
+}
+
+.chat-block{
+    margin: 50px auto auto auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 600px;
+    border: 5px white solid;
+}
+
+.chat-messages{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: rgb(79, 79, 79);
+    width: 600px;
+    height: 400px;
+    overflow-y: auto;
+
+}
+
+.messageblock{
+    max-width: 500px;
+    overflow-wrap: break-word;
+    text-align: right;
+}
+
+.username{
+    color:blue;
+}
+
+.chat-input{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+    background-color: rgb(57, 56, 56);
+    height: 100px;
+    width: 600px;
+}
+
+.chat-input input{
+    margin-right: auto;
+    background-color: rgb(225, 225, 225);
+    width: 400px;
+    height: 30px;
+}
+
+.chat-input button{
+    width: 50px;
+    height: 30px;
+}
+
+.login{
+    margin: 50px auto auto auto;
+    width:300px;
+}
+
+.invalidusername-error{
+    color: red;
+}
