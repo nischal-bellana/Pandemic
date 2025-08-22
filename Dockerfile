@@ -8,6 +8,9 @@ COPY src src
 COPY mvnw .
 COPY .mvn .mvn
 
+# Install tar (needed by Maven wrapper)
+RUN yum install -y tar gzip
+
 # Set execution permission for the Maven wrapper
 RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
