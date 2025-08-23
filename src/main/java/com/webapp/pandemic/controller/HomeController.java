@@ -74,9 +74,9 @@ public class HomeController {
     @ResponseBody
     @GetMapping("/messages-first")
     public String messagerFirst(@RequestParam String username){
-        Optional<Message> message_retrieved = messageService.getMessagesFirst();
+        List<Message> messages_retrieved = messageService.getMessagesFirst();
 
-        if(message_retrieved.isEmpty()) return """
+        if(messages_retrieved == null) return """
                 <div class="messageblock"
                              id="message-1"
                              hx-get="/messages-first"
@@ -86,21 +86,33 @@ public class HomeController {
                              </div>
                 """;
 
-        Message m = message_retrieved.get();
+        StringBuilder res = new StringBuilder();
 
-        return (m.getId() != 1 ? """ 
-                <div class="messageblock"
-                             id="message-%d"
-                             hx-get="/messages-start"
-                             hx-trigger="intersect"
-                             hx-swap="outerHTML"
-                             hx-include=".username"
-                             hx-vals='{"id" : %d}'>
-                </div>
-                """.formatted(m.getId()-1, m.getId()-1) :
-                "") +
+        if(messages_retrieved.size() != 1) {
+            Message firstm = messages_retrieved.get(0);
+            boolean nomore = firstm.getId() == 1;
 
-                """
+            res.append("""
+                    <div class='messageblock' id='message-%d' %s>
+                        <span class='username-text'>%s: </span>%s
+                    </div>
+                    """.formatted(firstm.getId(),
+                    nomore ? "" : "hx-get='/message-start' hx-trigger='intersect delay:300ms' hx-swap='outerHTML' hx-include='.username' hx-vals='{\"id\" : 1}'",
+                    firstm.getUsername(),
+                    firstm.getContent()));
+        }
+
+        for(int i = 1; i < messages_retrieved.size() - 1; i++){
+            Message m = messages_retrieved.get(i);
+            res.append("""
+        <div class='messageblock' id='message-%d'>
+            <span class='username-text'>%s: </span>%s
+        </div>
+        """.formatted(m.getId(), m.getUsername(), m.getContent()));
+        }
+
+        Message lastm = messages_retrieved.get(messages_retrieved.size()-1);
+        res.append("""
                 <div class="messageblock"
                              id="message-%d"
                              hx-get="/messages-end"
@@ -110,7 +122,9 @@ public class HomeController {
                              hx-vals='{"id" : %d}'>
                              <span class='username-text'>%s: </span>%s
                 </div>
-                """.formatted(m.getId(), m.getId(), m.getUsername(), m.getContent());
+                """.formatted(lastm.getId(), lastm.getId(), lastm.getUsername(), lastm.getContent()));
+
+        return res.toString();
     }
 
     @ResponseBody
@@ -151,8 +165,8 @@ public class HomeController {
     public String messagesEnd(@RequestParam String username, @RequestParam Long id){
         List<Message> messages_retrieved = messageService.getMessagesEnd(id);
 
-        if(messages_retrieved.size() == 1) {
-            Message m = messages_retrieved.get(0);
+        if(messages_retrieved == null){
+            Message m = messageService.getLastMessage();
             return """
                 <div class="messageblock"
                              id="message-%d"
