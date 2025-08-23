@@ -1,5 +1,5 @@
 <div class="login">
     <input name="username" type="text" hx-post="/login" hx-trigger="keydown[keyCode==13]" hx-target="closest .login" hx-swap="outerHTML">
     <button hx-post="/login" hx-include="previous [name='username']" hx-target="closest .login" hx-swap="outerHTML">Go</button>
-    <div class="invalidusername-error">length should be >= 5 and <= 16</div>
+    <div class="invalidusername-error" th:text="${error_message}"></div>
 </div>

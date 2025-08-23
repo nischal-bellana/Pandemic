@@ -8,8 +8,14 @@
 </script>
 
 <div class="chat-block">
-    <div class="chat-messages" hx-trigger="every 300ms" hx-get="/messages" hx-swap="beforeend" hx-include=".username">
-
+    <div class="chat-messages">
+        <div class="messageblock"
+             id="message-0"
+             hx-get="/messages-first"
+             hx-trigger="intersect delay:300ms"
+             hx-swap="outerHTML"
+             hx-include=".username">
+        </div>
     </div>
     <div class="chat-input">
         <input name="message" type="text" placeholder="Type a message..." hx-post="/message" hx-trigger="keydown[keyCode==13]" hx-include=".username" hx-swap="outerHTML">
